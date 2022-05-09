@@ -1,0 +1,52 @@
+body {
+    background-color: #121214;
+    color: white;
+    max-width: 100vw;
+}
+
+::-webkit-scrollbar {
+    width: 15px;
+    height: 15px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background-image: linear-gradient(45deg, #00aeff, #a68eff);
+    border-radius: 10px;
+    -webkit-box-shadow: rgba(0, 0, 0, .12) 0 3px 13px 1px;
+}
+
+@media screen and (max-width: 480px) {
+    #cardzone {
+        width: 150vw;
+    }
+    hr {
+        width: 217vw;
+    }
+    .bar {
+        width: 250vw;
+    }
+    #sound {
+        padding-left: 0;
+    }
+    #ps {
+        padding-left: 0;
+    }
+}
+
+.bar {
+    position: sticky;
+    bottom: 0;
+}
+
+#sound {
+    padding-left: 32vw;
+}
+
+#ps {
+    padding-left: 28vw;
+}
