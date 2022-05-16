@@ -1,7 +1,8 @@
+//定義
 const ytiframe = 'youtubearea';
 const targetWindow = document.getElementById(ytiframe).contentWindow;
 
-const ag2ytControl = function(action, arg = null) {
+const ytControl = function(action, arg = null) {
     targetWindow.postMessage('{"event":"command", "func":"' + action + '", "args":' + arg + '}', '*');
 };
 
@@ -27,6 +28,7 @@ function generate_api_url(token) {
 var url = generate_api_url(pagetoken)
 get_api_data();
 
+//読み込み時
 function get_api_data() {
     xhr.open("GET", url);
     xhr.send();
@@ -35,7 +37,7 @@ function get_api_data() {
             let data = JSON.parse(xhr.responseText);
 
             pagetoken = data.nextPageToken;
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < data.items.length; i++) {
                 results.push({
                     "title": data.items[i].snippet.title,
                     "id": data.items[i].snippet.resourceId.videoId
@@ -49,25 +51,78 @@ function get_api_data() {
     }
 
     function getdata() {
+        var card = document.getElementById("cardzone");
+
+        while (card.lastChild) {
+            card.removeChild(card.lastChild);
+        }
+        for (var i = 0; i < 4; i++) {
+            var id = results[i].id
+            var title = results[i].title
+            var image = `https://img.youtube.com/vi/${id}/mqdefault.jpg`
+            console.log(id, title, image)
+
+            card.insertAdjacentHTML("beforeend", `<div class="bg-gray-900 shadow-lg rounded p-2" id='maincard' style="height: 10%; width: 20%;"><div class="group relative"><img class="w-full md:w-100 block rounded" src="${image}" alt="" /> <div class="absolute bg-black rounded bg-opacity-0 group-hover:bg-opacity-60 w-full h-full top-0 flex items-center group-hover:opacity-100 transition justify-evenly"> <button class="hover:scale-110 text-white opacity-0 transform translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 transition" onclick="getId(this)" id="${i}"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-play-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" /></svg> </button></div></div><div class="p-5"><h1 class="text-white text-lg">${title}</h1></div></div> <h1>　　</h1>`);
+        }
+
+    }
+    setTimeout(getdata, 1000)
+
+
+
+}
+
+
+function getalldata(lol) {
+    if (lol.value == "off") {
+        lol.value = "on";
+        var card = document.getElementById("cardzone");
+
+        while (card.lastChild) {
+            card.removeChild(card.lastChild);
+        }
         for (var i = 0; i < results.length; i++) {
             var id = results[i].id
             var title = results[i].title
             var image = `https://img.youtube.com/vi/${id}/mqdefault.jpg`
             console.log(id, title, image)
 
-            var card = document.getElementById("cardzone");
-            card.insertAdjacentHTML("beforeend", `<div class="bg-gray-900 shadow-lg rounded p-2" style="height: 70%; width: 50%;"><div class="group relative"><img class="w-full md:w-100 block rounded" src="${image}" alt="" /> <div class="absolute bg-black rounded bg-opacity-0 group-hover:bg-opacity-60 w-full h-full top-0 flex items-center group-hover:opacity-100 transition justify-evenly"> <button class="hover:scale-110 text-white opacity-0 transform translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 transition" onclick="getId(this)" id="${i}"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-play-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" /></svg> </button></div></div><div class="p-5"><h1 class="text-white text-lg">${title}</h1></div></div> <h1>　　</h1>`);
+            card.insertAdjacentHTML("beforeend", `<div class="bg-gray-900 shadow-lg rounded p-2" id='maincard' style="height: 10%; width: 20%;"><div class="group relative"><img class="w-full md:w-100 block rounded" src="${image}" alt="" /> <div class="absolute bg-black rounded bg-opacity-0 group-hover:bg-opacity-60 w-full h-full top-0 flex items-center group-hover:opacity-100 transition justify-evenly"> <button class="hover:scale-110 text-white opacity-0 transform translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 transition" onclick="getId(this)" id="${i}"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-play-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" /></svg> </button></div></div><div class="p-5"><h1 class="text-white text-lg">${title}</h1></div></div> <h1>　　</h1>`);
+
         }
+        document.getElementById('movietext').innerHTML = '閉じる'
+    } else {
+        lol.value = "off";
+        var card = document.getElementById("cardzone");
+
+        while (card.lastChild) {
+            card.removeChild(card.lastChild);
+        }
+        for (var i = 0; i < 4; i++) {
+            var id = results[i].id
+            var title = results[i].title
+            var image = `https://img.youtube.com/vi/${id}/mqdefault.jpg`
+            console.log(id, title, image)
+
+            card.insertAdjacentHTML("beforeend", `<div class="bg-gray-900 shadow-lg rounded p-2" id='maincard' style="height: 10%; width: 20%;"><div class="group relative"><img class="w-full md:w-100 block rounded" src="${image}" alt="" /> <div class="absolute bg-black rounded bg-opacity-0 group-hover:bg-opacity-60 w-full h-full top-0 flex items-center group-hover:opacity-100 transition justify-evenly"> <button class="hover:scale-110 text-white opacity-0 transform translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 transition" onclick="getId(this)" id="${i}"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-play-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z" /></svg> </button></div></div><div class="p-5"><h1 class="text-white text-lg">${title}</h1></div></div> <h1>　　</h1>`);
+        }
+        document.getElementById('movietext').innerHTML = 'もっと見る'
 
     }
-    setTimeout(getdata, 1000)
 
 }
 
+//再生開始時　
+var time = document.getElementById('time')
 
-
+function start() {
+    bar = setInterval(() => {
+        time.value++
+            console.log(time.value)
+    }, 1030);
+}
 getId = function(el) {
-    console.log(el.id);
+
     var area = document.getElementById('youtubearea')
     var targetid = results[el.id].id
     var targettitle = results[el.id].title
@@ -78,17 +133,54 @@ getId = function(el) {
     var title = document.getElementById('ctitle')
     img.setAttribute('src', `${targetimage}`)
     title.innerHTML = targettitle
+
+    function play() {
+        ytControl('unMute');
+        ytControl('playVideo');
+        fetch(`https://www.googleapis.com/youtube/v3/videos?id=${targetid}&part=contentDetails&key=${apikey}`)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                times = data.items[0].contentDetails.duration
+                console.log(times);
+
+                var match = times.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+
+                match = match.slice(1).map(function(x) {
+                    if (x != null) {
+                        return x.replace(/\D/, '');
+                    }
+                });
+
+                var hours = (parseInt(match[0]) || 0);
+                var minutes = (parseInt(match[1]) || 0);
+                var seconds = (parseInt(match[2]) || 0);
+                var result = hours * 3600 + minutes * 60 + seconds
+                console.log(result)
+                time.setAttribute('max', result)
+            })
+
+        time.value = 0
+    }
+
+    setTimeout(play, 1000)
+    setTimeout(start, 1000)
+    clearInterval(bar)
+
 }
 
 
-
+//ボタン類
 function playpause(lol) {
     if (lol.value == "play") {
         lol.value = "pause";
-        ag2ytControl('pauseVideo');
+        ytControl('pauseVideo');
+        clearInterval(bar)
     } else {
         lol.value = "play";
-        ag2ytControl('playVideo');
+        ytControl('playVideo');
+        start();
     }
 }
 
@@ -96,27 +188,40 @@ var elem = document.getElementById('range');
 var target = document.getElementById('value');
 var rangeValue = function(elem, target) {
     return function(evt) {
-        ag2ytControl('setVolume', `[${elem.value}]`);
+        ytControl('setVolume', `[${elem.value}]`);
 
     }
 }
 elem.addEventListener('input', rangeValue(elem, target));
 
-document.getElementById('ytseek').addEventListener('click', function(event) {
-    //(secondsパラメータ : 指定の秒数の位置へ移動, allowSeekAheadパラメータ : 未バッファの位置の場合に新しいリクエストを行うか)
-    ag2ytControl('seekTo', '[60,true]');
-});
+var rangeValue = function(time) {
+    return function(evt) {
+        ytControl('seekTo', `[${time.value},true]`);
+    }
+}
+time.addEventListener('input', rangeValue(time));
 
+function loop(lol) {
+    if (lol.value == "unloop") {
+        lol.value = "loop";
+        ytControl('setLoop', 'true');
+        document.getElementById('loopv').innerHTML = 'loop'
+    } else {
+        lol.value = "unloop";
+        ytControl('setLoop', 'false');
+        document.getElementById('loopv').innerHTML = 'loop off'
+    }
+}
 
 function OnOff(lol) {
     var img = document.getElementById('muteimg')
     if (lol.value == "mute") {
         lol.value = "unmute";
-        ag2ytControl('unMute');
+        ytControl('unMute');
         img.setAttribute('src', '../img/unmute.png')
     } else {
         lol.value = "mute";
-        ag2ytControl('mute');
+        ytControl('mute');
         img.setAttribute('src', '../img/mute.png')
 
     }

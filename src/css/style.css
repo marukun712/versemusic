@@ -30,11 +30,15 @@ body {
     .bar {
         width: 250vw;
     }
-    #sound {
-        padding-left: 0;
+    .youtube iframe {
+        width: 300px;
+        height: 200px;
+        position: absolute;
+        left: 150vw;
+        top: 1px;
     }
-    #ps {
-        padding-left: 0;
+    #time {
+        width: 250vw;
     }
 }
 
@@ -43,10 +47,22 @@ body {
     bottom: 0;
 }
 
-#sound {
-    padding-left: 32vw;
+#ps {
+    margin: 0 auto
 }
 
-#ps {
-    padding-left: 28vw;
+.times {
+    margin: 0 auto
+}
+
+.youtube iframe {
+    width: 300px;
+    height: 200px;
+    position: absolute;
+    right: 1px;
+    top: 1px;
+}
+
+#time {
+    width: 99vw;
 }

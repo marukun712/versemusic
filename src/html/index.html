@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>versemusic</title>
+    <title>VerseMusic</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../css/style.css"> </head>
 <link rel="stylesheet" href="../css/icon.css"> </head>
@@ -30,9 +30,9 @@
                         <a class="block px-4 py-2 mt-2 text-sm font-semibold text-white bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                             href="#">Home</a>
                         <a class="block px-4 py-2 mt-2 text-sm font-semibold text-white bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                            href="#">Movie</a>
+                            href="#cardzone">Movie</a>
                         <a class="block px-4 py-2 mt-2 text-sm font-semibold text-white bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                            href="#">stream</a>
+                            href="#streamzone">stream</a>
                         <div @click.away="open = false" class="relative" x-data="{ open: false }">
                         </div>
                     </nav>
@@ -43,36 +43,49 @@
 
         <div class="ui">
 
-            <h1 class="p-5 font-semibold text-5xl">歌動画</h1>
-            <div class="md:flex m-5" id="cardzone">
+            <h1 class="p-10 font-semibold text-5xl ">歌動画</h1>
+            <div class="md:flex md:flex-wrap m-5" id="cardzone">
+            </div>
+
+            <button value="off" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded p-5" onclick="getalldata(this);">
+                <h1 id='movietext'>もっと見る</h1>
+            </button>
+
+            <h1 class="p-10 font-semibold text-5xl ">歌枠</h1>
+            <div class="md:flex md:flex-wrap m-5" id="streamzone">
             </div>
 
             <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded p-5">
-                もっと見る
+                <h1 id="streamtext">もっと見る</h1>
             </button>
-            <iframe id="youtubearea" width="200" height="200" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="youtube">
+                <iframe id="youtubearea" frameborder="0" allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
 
         </div>
 
     </div>
 
 
+
     <div class="bar bg-white">
         <hr class="bg-gray-200 rounded">
-
+        <input type="range" id="time" min="0" value="0" step='1'>
         <div class="controller flex">
             <div class="flex" id="info">
                 <img id='cimage' style="width: auto; height: 50px;">
                 <h1 style="font-size: 120%; color: black;" class="p-2" id='ctitle'></h1>
             </div>
-            <div class="playpause flex " id="ps">
+
+            <div class="playpause flex" id="ps">
                 <input type="checkbox" value="play" id="playpause" name="check" onclick="playpause(this);" />
                 <label for="playpause" tabindex=1></label>
             </div>
-            <button id='gettime'>gettime</button>
-            <div class="flex " id="sound">
-                <input type="range" id="range" min="0" max="100" value="50" step='1 '>
-                <button value="mute" onClick="OnOff(this);" class="p-5"><img src='../img/mute.png ' width="50" height="50" id="muteimg" ></button>
+
+            <div class="flex" id="sound">
+                <button id="loop" class="text-black" onclick="loop(this);" value="unloop"><h1 id="loopv">loop off</h1></button>
+                <input type="range" id="range" min="0" max="100" value="20" step='1'>
+                <button value="unmute" onClick="OnOff(this);" class="p-5"><img src='../img/unmute.png ' width="50" height="50" id="muteimg" ></button>
             </div>
         </div>
     </div>
